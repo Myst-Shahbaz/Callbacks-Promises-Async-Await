@@ -1,4 +1,4 @@
-
+/*
 function sum(a, b) {
   console.log(a + b);
 }
@@ -40,3 +40,47 @@ let promise = new Promise((resolve, reject) => {
   console.log("i am a promise");
 });
 
+
+const getPromise = () => {
+  return new Promise((resolve, reject) => {
+    console.log("i am a promise");
+    resolve("successfully ....");
+    // reject("API doesn't found ....");
+  });
+};
+
+let promise = getPromise();
+promise.then((res) => {
+  console.log("promise fulfilled", res);
+});
+
+promise.catch((err) => {
+  console.log("rejected", err);
+});
+
+*/
+
+function asyncfunction_localserver1() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log("API Data 1");
+      resolve("API Data 1 access granted completely and show you the data");
+    }, 3000);
+  });
+}
+function asyncfunction_localserver2() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log("API Data 2");
+      resolve("API Data 2 access granted completely and show you the data");
+    }, 6000);
+  });
+}
+
+console.log("fetching Provided Data ....");
+asyncfunction_localserver1().then((res) => {
+  console.log("fetching user Data ....");
+  asyncfunction_localserver2().then((res) => {
+    console.log(res);
+  });
+});

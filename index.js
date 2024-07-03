@@ -1,4 +1,4 @@
-/*
+
 function sum(a, b) {
   console.log(a + b);
 }
@@ -21,10 +21,17 @@ function getdata(fetchdata, getnextdata) {
       if (getnextdata) {
         getnextdata();
       }
-    }, 5000);
+    }, 3000);
   });
 }
 
+getdata(1).then((res) => {
+  return getdata(2)
+}).then((res) => {
+    return getdata(3)
+  }).then((res)=>{
+    console.log(res)
+  });
 getdata(1, () => {
   getdata(2, ()=>{
     getdata(3, ()=>{
@@ -33,7 +40,7 @@ getdata(1, () => {
   });
 });
 
-// to solve callbacks we use promises
+//  to solve callbacks we use promises
 
 let promise = new Promise((resolve, reject) => {
   reject("due to high occurance");
@@ -58,7 +65,7 @@ promise.catch((err) => {
   console.log("rejected", err);
 });
 
-*/
+
 
 function asyncfunction_localserver1() {
   return new Promise((resolve, reject) => {
@@ -84,3 +91,60 @@ asyncfunction_localserver1().then((res) => {
     console.log(res);
   });
 });
+
+
+function API() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log("weather data");
+      resolve(200);
+    }, 2000);
+  });
+}
+
+async function getweatherdata() {
+  await API();
+  await API();
+}
+
+
+
+function getdata(fetchdata) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log("the fetch data is", fetchdata);
+      resolve(`Data transfer completed....`);
+    }, 3000);
+  });
+}
+
+// this function needs to be called for execution
+
+async function getalldata() {
+  console.log("fetching 1st data ....");
+  await getdata(1);
+  console.log("fetching 2nd data ....");
+  await getdata(2);
+  console.log("fetching 3rd data ....");
+  await getdata(3);
+  console.log("fetching 4th data ....");
+  await getdata(4);
+  console.log("fetching 5th data ....");
+  await getdata(5);
+}
+
+// Thanks to IIFE (Immediate invoke function expression)
+
+(async function () {
+  console.log("fetching 1st data ....");
+  await getdata(1);
+  console.log("fetching 2nd data ....");
+  await getdata(2);
+  console.log("fetching 3rd data ....");
+  await getdata(3);
+  console.log("fetching 4th data ....");
+  await getdata(4);
+  console.log("fetching 5th data ....");
+  await getdata(5);
+})();
+
